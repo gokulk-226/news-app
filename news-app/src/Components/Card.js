@@ -1,33 +1,22 @@
-import React from 'react'
+import React from 'react';
 
-const Card = ({data}) => {
-     console.log(data);
-
-     const readMore = (url) =>{
-        window.open(url)
-     }
-     
+const Card = ({ data }) => {
   return (
-    <div className='cardContainer'>
-    {data.map((curItem,index)=>{
-        if(!curItem.urlToImage){
-            return null
-        }else{
-            return(
-            <div className='card'>
-                <img src={curItem.urlToImage}/>
-                <div className='content'>
-                    <a className='title' onClick={()=>window.open(curItem.url)}>{curItem.title}</a>
-                    <p>{curItem.description}</p>
-                    <button onClick={()=>window.open(curItem.url)}>Read More</button>
-                </div>
-            </div>
-        )
-        }
-         
-    })}
+    <div className="cardContainer">
+      {data.map((news, index) => (
+        <div key={index} className="card">
+          <img src={news.urlToImage} alt="News" className="cardImage" />
+          <h3 className="title">{news.title}</h3>
+          <p><strong>Source:</strong> {news.source.name}</p>
+          <p><strong>Author:</strong> {news.author ? news.author : 'Unknown'}</p>
+          <p><strong>Published at:</strong> {new Date(news.publishedAt).toLocaleDateString()}</p>
+          <button onClick={() => window.open(news.url, '_blank')} className="card button">
+            Read More
+          </button>
+        </div>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;
