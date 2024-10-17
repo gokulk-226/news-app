@@ -32,17 +32,13 @@ const Newsapp = () => {
         <div>
           <h1>NewsNow</h1>
         </div>
-        <ul style={{ display: "flex", gap: "11px" }}>
-          <a style={{ fontWeight: 600, fontSize: "17px" }}>All News</a>
-          <a style={{ fontWeight: 600, fontSize: "17px" }}>Latest Updates</a>
-        </ul>
         <div className="searchBar">
           <input type="text" placeholder="Search News" value={search} onChange={handleInput} />
           <button onClick={getData}>Search</button>
         </div>
       </nav>
       <div>
-        <p className="head">Stay Ahead with the Latest Updates</p>
+        <p className="head">Latest Updates</p>
       </div>
       <div className="categoryBtn">
         <button onClick={userInput} value="sports">Sports</button>
