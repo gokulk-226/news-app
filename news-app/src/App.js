@@ -1,5 +1,4 @@
-import './App.css';
-import Newsapp from './Components/Newsapp';
+import Newsapp from './components/Newsapp';
 
 
 function App() {
