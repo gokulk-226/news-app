@@ -21,12 +21,28 @@
     color: #f39c12;
   }
   
-  .search-bar input {
-    padding: 8px;
+  .search-bar {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .search-bar input[type="text"] {
     width: 200px;
     border-radius: 5px;
     border: none;
+    padding-right: 30px; /* Add padding to make room for the icon */
   }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+  }
+  
   
   /* Category button styling */
   .category-section {

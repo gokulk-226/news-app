@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 import './Newsapp.css';
 
 const Newsapp = () => {
@@ -9,7 +10,7 @@ const Newsapp = () => {
     "India", "United States", "United Kingdom", "Australia", "Canada", 
     "Germany", "France", "Italy", "Spain", "Brazil", 
     "Japan", "China", "Russia", "South Africa", "Mexico", 
-    "Argentina", "South Korea", "Italy" // Added one more country
+    "Argentina", "Italy" // Added one more country
   ]);
 
    // List of countries  //b6416b78bc0349dea2c69fd9b3482950
@@ -59,30 +60,37 @@ const Newsapp = () => {
       <nav className="navbar">
         <h1 className="navbar-title">NewsNow</h1>
         <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search News"
-            value={search}
-            onChange={handleInput}
-            onKeyDown={handleEnterKeyPress}
-          />
-        </div>
+    <input
+      type="text"
+      placeholder="Search News.....,"
+      value={search}
+      onChange={handleInput}
+      onKeyDown={handleEnterKeyPress}
+    />
+    <SearchIcon className="search-icon" />
+  </div>
       </nav>
       <div className="category-section">
-        <button className="category-btn" onClick={() => handleCategoryClick("India")}>India</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("World")}>World</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Business")}>Business</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Technology")}>Technology</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Sports")}>Sports</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Politics")}>Politics</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Health")}>Health</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Fitness")}>Fitness</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Entertainment")}>Entertainment</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Science")}>Science</button>
-        <button className="category-btn" onClick={() => setActiveCategory(activeCategory === "Countries" ? null : "Countries")}>
-          Countries
-        </button>
-      </div>
+  <button className="category-btn" onClick={() => handleCategoryClick("India")}>India</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("World")}>World</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Business")}>Business</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Technology")}>Technology</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Sports")}>Sports</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Politics")}>Politics</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Health")}>Health</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Fitness")}>Fitness</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Entertainment")}>Entertainment</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Science")}>Science</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Travel")}>Travel</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Fashion")}>Fashion</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Lifestyle")}>Lifestyle</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Environment")}>Environment</button>
+  <button className="category-btn" onClick={() => handleCategoryClick("Food")}>Food</button>
+  <button className="category-btn" onClick={() => setActiveCategory(activeCategory === "Countries" ? null : "Countries")}>
+    Countries
+  </button>
+</div>
+
       {activeCategory === "Countries" && (
         <div className="country-dropdown">
           {countries.map((country, index) => (
