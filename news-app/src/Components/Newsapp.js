@@ -13,12 +13,14 @@ import {
 
 const Newsapp = () => {
   const [search, setSearch] = useState("India");
-  const [searchBar, setSearchBar] = useState("India");
+  const [searchBar, setSearchBar] = useState("");
   const [newsData, setNewsData] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 16; // Changed from 5 to 10
+  const itemsPerPage = 16;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const [countries] = useState([
     "India", "United States", "United Kingdom", "Australia", "Canada", 
@@ -27,28 +29,34 @@ const Newsapp = () => {
     "Argentina"
   ]);
 
-  const API_KEY = "4e968c653fcb4859b897e7b30b06c928";
- 
+  const API_KEY = "4e968c653fcb4859b897e7b30b06c928";//b6416b78bc0349dea2c69fd9b3482950//4e968c653fcb4859b897e7b30b06c928
+
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
+      setError(null); // Reset error state
       try {
-        const response = await fetch(`https://newsapi.org/v2/everything?q=${search}&apiKey=${API_KEY}`);
+        const query = search || "India"; // Default to "India" if search is empty
+        const response = await fetch(`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`);
+        if (!response.ok) throw new Error('Network response was not ok');
         const jsonData = await response.json();
-        const filteredArticles = jsonData.articles.filter(article => 
-          article.urlToImage && article.title && article.description
-        );
+
+        const filteredArticles = jsonData.articles
+          .filter(article => article.urlToImage && article.title && article.description)
+          .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
         setNewsData(filteredArticles);
         setCurrentPage(1);  // Reset page number on new search
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setError(error.message); // Set error message
+      } finally {
+        setLoading(false); // Set loading to false after fetch completes
       }
     };
     getData();
   }, [search]);
-  
 
   const handleCategoryClick = (category) => {
-    setSearchBar(category);
     setSearch(category);
     setActiveCategory(category);
   };
@@ -78,29 +86,30 @@ const Newsapp = () => {
       </nav>
 
       <div className="category-section">
-    {/* Category buttons arranged in a logical order */}
-    <button className="category-btn" onClick={() => handleCategoryClick("World")}>World</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("India")}>India</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Business")}>Business</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Technology")}>Technology</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Politics")}>Politics</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Sports")}>Sports</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Health")}>Health</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Fitness")}>Fitness</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Education")}>Education</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Jobs")}>Jobs</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Entertainment")}>Entertainment</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Cinema")}>Cinema</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Science")}>Science</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Travel")}>Travel</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Fashion")}>Fashion</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Lifestyle")}>Lifestyle</button>
-    <button className="category-btn" onClick={() => handleCategoryClick("Food")}>Food</button>
-    <button className="category-btn" onClick={() => setActiveCategory(activeCategory === "Countries" ? null : "Countries")}>
-        Countries
-    </button>
-</div>
-
+        {/* New "Trending" and "Popular" category buttons */}
+        <button className="category-btn" onClick={() => handleCategoryClick("Trending")}>Trending</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Popular")}>Popular</button>
+        
+        {/* Original category buttons in a logical order */}
+        <button className="category-btn" onClick={() => handleCategoryClick("World")}>World</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("India")}>India</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Business")}>Business</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Technology")}>Technology</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Politics")}>Politics</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Sports")}>Sports</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Health")}>Health</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Education")}>Education</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Jobs")}>Jobs</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Entertainment")}>Entertainment</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Cinema")}>Cinema</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Science")}>Science</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Travel")}>Travel</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Fashion")}>Fashion</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Food")}>Food</button>
+        <button className="category-btn" onClick={() => setActiveCategory(activeCategory === "Countries" ? null : "Countries")}>
+          Countries
+        </button>
+      </div>
 
       {activeCategory === "Countries" && (
         <div className="country-dropdown">
@@ -115,6 +124,9 @@ const Newsapp = () => {
           ))}
         </div>
       )}
+
+      {loading && <p>Loading articles...</p>}
+      {error && <p className="error-message">Error: {error}</p>}
 
       <div className="news-section">
         {paginatedArticles.map((news, index) => (
