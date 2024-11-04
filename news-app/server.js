@@ -25,23 +25,6 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-// Topic schema and model
-const topicSchema = new mongoose.Schema({
-  topic: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
-
-const Topic = mongoose.model('Topic', topicSchema);
-
-// User preference schema and model
-const userPreferenceSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
-  articleId: { type: String, required: true },
-  liked: { type: Boolean, default: false }
-});
-
-const UserPreference = mongoose.model('UserPreference', userPreferenceSchema);
-
 // Register endpoint
 app.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
@@ -74,77 +57,6 @@ app.post('/login', async (req, res) => {
     res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error });
-  }
-});
-
-// Store searched topic endpoint
-app.post('/store-topic', async (req, res) => {
-  const { topic } = req.body;
-
-  try {
-    const newTopic = new Topic({ topic });
-    await newTopic.save();
-    res.status(201).json({ message: 'Topic stored successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error storing topic', error });
-  }
-});
-
-// Store user preference endpoint
-app.post('/store-preference', async (req, res) => {
-  const { userId, articleId, liked } = req.body;
-
-  try {
-    const existingPreference = await UserPreference.findOne({ userId, articleId });
-    if (existingPreference) {
-      existingPreference.liked = liked;
-      await existingPreference.save();
-    } else {
-      const newPreference = new UserPreference({ userId, articleId, liked });
-      await newPreference.save();
-    }
-
-    res.status(201).json({ message: 'Preference stored successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error storing preference', error });
-  }
-});
-
-// Fetch and preprocess articles for KNN
-const fetchAndPreprocessArticles = async () => {
-  const articles = await Topic.find(); // Replace with actual articles data
-  // Implement TF-IDF or any vectorization here
-  return articles.map(article => ({
-    // Example of converting article to a vector representation
-    vector: [/* Vector representation of article */],
-    id: article._id
-  }));
-};
-
-// Get recommendations endpoint
-app.post('/get-recommendations', async (req, res) => {
-  const { userId } = req.body;
-
-  try {
-    const userPreferences = await UserPreference.find({ userId });
-    const articles = await fetchAndPreprocessArticles();
-
-    // Extract vectors and labels
-    const vectors = articles.map(article => article.vector);
-    const labels = articles.map(article => article.id);
-
-    // Initialize and train KNN
-    const knn = new KNN(vectors, labels, { k: 3 }); // Adjust k based on your needs
-
-    const recommendedIds = knn.predict(userPreferences.map(pref => {
-      // Prepare user preference vector here
-      return [/* Vector representation of user preference */];
-    }));
-
-    const recommendedArticles = await Topic.find({ _id: { $in: recommendedIds } });
-    res.status(200).json(recommendedArticles);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching recommendations', error });
   }
 });
 
