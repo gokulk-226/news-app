@@ -29,12 +29,12 @@ const Newsapp = () => {
     "Argentina"
   ]);
 
-  const API_KEY = "4e968c653fcb4859b897e7b30b06c928";//b6416b78bc0349dea2c69fd9b3482950//4e968c653fcb4859b897e7b30b06c928
+  const API_KEY = "4e968c653fcb4859b897e7b30b06c928";
 
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      setError(null); // Reset error state
+      setError(null);
       try {
         const query = search || "India"; // Default to "India" if search is empty
         const response = await fetch(`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`);
@@ -50,24 +50,30 @@ const Newsapp = () => {
       } catch (error) {
         setError(error.message); // Set error message
       } finally {
-        setLoading(false); // Set loading to false after fetch completes
+        setLoading(false);
       }
     };
     getData();
   }, [search]);
 
   const handleCategoryClick = (category) => {
-    setSearch(category);
-    setActiveCategory(category);
+    if (category === "Bookmarks") {
+      setActiveCategory("Bookmarks");
+    } else {
+      setSearch(category);
+      setActiveCategory(category);
+    }
   };
 
   const handleCountryClick = (country) => {
-    setSearchBar(country);
+    
     setSearch(country);
     setActiveCategory("Countries");
   };
 
-  const paginatedArticles = paginateArticles(newsData || [], currentPage, itemsPerPage);
+  const paginatedArticles = activeCategory === "Bookmarks"
+    ? paginateArticles(bookmarkedArticles, currentPage, itemsPerPage)
+    : paginateArticles(newsData || [], currentPage, itemsPerPage);
 
   return (
     <div className="newsapp-container">
@@ -86,11 +92,12 @@ const Newsapp = () => {
       </nav>
 
       <div className="category-section">
-        {/* New "Trending" and "Popular" category buttons */}
+        {/* New "Bookmarks" category button */}
+        
         <button className="category-btn" onClick={() => handleCategoryClick("Trending")}>Trending</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Popular")}>Popular</button>
         
-        {/* Original category buttons in a logical order */}
+        {/* Original category buttons */}
         <button className="category-btn" onClick={() => handleCategoryClick("World")}>World</button>
         <button className="category-btn" onClick={() => handleCategoryClick("India")}>India</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Business")}>Business</button>
@@ -105,7 +112,7 @@ const Newsapp = () => {
         <button className="category-btn" onClick={() => handleCategoryClick("Science")}>Science</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Travel")}>Travel</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Fashion")}>Fashion</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Food")}>Food</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Bookmarks")}>Bookmarks</button>
         <button className="category-btn" onClick={() => setActiveCategory(activeCategory === "Countries" ? null : "Countries")}>
           Countries
         </button>
@@ -158,8 +165,8 @@ const Newsapp = () => {
         </button>
         <span>Page {currentPage}</span>
         <button 
-          onClick={() => handleNextPage(currentPage, setCurrentPage, newsData, itemsPerPage)}
-          disabled={currentPage >= Math.ceil((newsData || []).length / itemsPerPage)}
+          onClick={() => handleNextPage(currentPage, setCurrentPage, activeCategory === "Bookmarks" ? bookmarkedArticles : newsData, itemsPerPage)}
+          disabled={currentPage >= Math.ceil((activeCategory === "Bookmarks" ? bookmarkedArticles.length : newsData.length) / itemsPerPage)}
         >
           Next
         </button>
