@@ -6,6 +6,7 @@ function Login({ setIsLoggedIn }) {
   const [formData, setFormData] = useState({ email: '', password: '', name: '' });
   const [error, setError] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -33,6 +34,7 @@ function Login({ setIsLoggedIn }) {
 
       if (response.ok) {
         setIsLoggedIn(true);
+        localStorage.setItem('isLoggedIn', true);
         navigate('/');
       } else {
         setError(data.message || 'Login failed');
@@ -71,8 +73,8 @@ function Login({ setIsLoggedIn }) {
 
   return (
     <div className="newsapp-container">
-      <div className="navbar">
-        <span className="navbar-title">NewsNow</span>
+      <div className="navbar1">
+        <span className="navbar-title1">News Aggregator</span>
       </div>
       <div className="login-container">
         <h2>{isRegistering ? 'Register' : 'Login'}</h2>
@@ -104,14 +106,22 @@ function Login({ setIsLoggedIn }) {
           </div>
           <div className="input-group">
             <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              className="login-input"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <div className="password-container">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                className="login-input"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <span
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? '🔓' : '🔒'}
+              </span>
+            </div>
           </div>
           <button type="submit" className="login-button">
             {isRegistering ? 'Register' : 'Login'}

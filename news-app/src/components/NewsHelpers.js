@@ -1,19 +1,51 @@
-
-
-// Bookmarking Functions
-export const bookmarkArticle = (article, bookmarkedArticles, setBookmarkedArticles) => {
+// Bookmarking Functions with MongoDB Integration
+export const bookmarkArticle = async (article, userId, bookmarkedArticles, setBookmarkedArticles) => {
     if (!isBookmarked(article.url, bookmarkedArticles)) {
-        setBookmarkedArticles([...bookmarkedArticles, article]);
+        try {
+            const response = await fetch('/bookmarks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, article })
+            });
+            if (response.ok) {
+                const updatedBookmarks = await fetchBookmarks(userId);
+                setBookmarkedArticles(updatedBookmarks);
+            }
+        } catch (error) {
+            console.error('Error adding bookmark:', error);
+        }
     }
 };
 
-export const removeBookmark = (url, bookmarkedArticles, setBookmarkedArticles) => {
-    const updatedBookmarks = bookmarkedArticles.filter((item) => item.url !== url);
-    setBookmarkedArticles(updatedBookmarks);
+export const removeBookmark = async (url, userId, bookmarkedArticles, setBookmarkedArticles) => {
+    try {
+        const response = await fetch('/bookmarks', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, url })
+        });
+        if (response.ok) {
+            const updatedBookmarks = await fetchBookmarks(userId);
+            setBookmarkedArticles(updatedBookmarks);
+        }
+    } catch (error) {
+        console.error('Error removing bookmark:', error);
+    }
 };
 
 export const isBookmarked = (url, bookmarkedArticles) => {
     return bookmarkedArticles.some((article) => article.url === url);
+};
+
+// Function to fetch bookmarks from MongoDB
+export const fetchBookmarks = async (userId) => {
+    try {
+        const response = await fetch(`/bookmarks/${userId}`);
+        return response.ok ? await response.json() : [];
+    } catch (error) {
+        console.error('Error fetching bookmarks:', error);
+        return [];
+    }
 };
 
 // Pagination Functions
@@ -53,18 +85,5 @@ export const PaginationControls = ({ currentPage, totalPages, onNext, onPrev }) 
         <button className="pagination-button" onClick={onNext} disabled={currentPage === totalPages}>
             Next
         </button>
-    </div>
-);
-
-// Render Comments Section
-export const CommentsSection = ({ onSubmit }) => (
-    <div className="comments-section">
-        <h4 className="comments-title">Comments</h4>
-        <input
-            type="text"
-            className="comments-input"
-            placeholder="Add a comment..."
-            onKeyDown={(e) => e.key === 'Enter' && onSubmit(e.target.value)}
-        />
     </div>
 );
