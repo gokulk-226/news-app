@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Anta&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 /* Reset and Full Page Background */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
-    font-family: Arial, sans-serif;
+    background-color: transparent; /* Remove white background */
+    font-family: 'Poppins', sans-serif;
 }
 
 /* General Styling */
@@ -14,14 +16,14 @@ html, body {
     box-sizing: border-box;
 }
 
-.newsapp-container {
+.login-page { /* Add a class to ensure styles only apply to login page */
     min-height: 100vh;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #ffffff;
-    color: #333333;
+    background-color: #121212; /* Dark background for login page */
+    color: #f9f9f9;
 }
 
 /* Navbar Styling */
@@ -31,10 +33,11 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
+    background-color: #1e1e1e;
     padding: 15px 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .navbar-title1 {
@@ -49,99 +52,47 @@ html, body {
     max-width: 400px;
     margin: 50px 0;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #1e1e1e; /* Dark background for login form */
     border-radius: 10px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-.login-container:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Header Styling */
-h2 {
+.login-container h2 {
     text-align: center;
-    color: #3498db;
+    font-size: 1.75rem;
     margin-bottom: 20px;
 }
 
-/* Error Message Styling */
-.error-message {
-    color: #e74c3c;
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-/* Input and Button Styling */
+/* Input Group Styling */
 .input-group {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
     margin-bottom: 15px;
 }
 
-.login-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #4CAF50;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 10px;
-    transition: background-color 0.3s, transform 0.2s ease;
-}
-
-.login-button:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
-}
-
-/* Toggle Text Styling */
-.toggle-text {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.toggle-button {
-    background: none;
-    border: none;
-    color: #3498db;
-    cursor: pointer;
-    font-size: 14px;
-    transition: color 0.3s;
-}
-
-.toggle-button:hover {
-    text-decoration: underline;
-    color: #287bbd;
-}
-
-/* Password Container with Toggle Icon */
-.password-container {
-    position: relative;
-    width: 100%;
+.input-group label {
+    font-size: 1rem;
+    color: #f9f9f9;
+    margin-bottom: 5px;
 }
 
 .login-input {
+    padding: 12px;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    color: #f9f9f9;
+    background-color: transparent;
+    transition: border-color 0.3s ease;
     width: 100%;
-    padding: 12px 40px 12px 12px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #cccccc;
-    background-color: #fafafa;
-    color: #333333;
-    font-size: 14px;
-    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .login-input:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    border-color: #007bff;
+}
+
+/* Eye icon for password field */
+.password-container {
+    position: relative;
 }
 
 .toggle-password {
@@ -150,11 +101,58 @@ h2 {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    font-size: 18px;
-    color: #888888;
-    transition: color 0.3s;
+    color: #3498db;
 }
 
-.toggle-password:hover {
-    color: #555555;
+/* Login Button Styling */
+.login-button {
+    padding: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.login-button:hover {
+    background-color: #2980b9;
+}
+
+/* Toggle Registration/Login */
+.toggle-text {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.toggle-button {
+    background-color: transparent;
+    color: #3498db;
+    border: none;
+    cursor: pointer;
+}
+
+.toggle-button:hover {
+    text-decoration: underline;
+}
+
+/* Error Message Styling */
+.error-message {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%; /* Make form responsive */
+    }
+
+    .navbar-title1 {
+        font-size: 24px;
+    }
 }

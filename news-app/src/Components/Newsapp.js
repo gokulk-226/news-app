@@ -16,12 +16,12 @@ const Newsapp = () => {
   const [activeCategory, setActiveCategory] = useState("Bookmarks");
   const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 16;
+  const itemsPerPage = 15;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const [countries] = useState([
-    "India", "United States", "United Kingdom", "Australia", "Canada", 
+    "United States", "United Kingdom", "Australia", "Canada", 
     "Germany", "France", "Italy", "Spain", "Brazil", 
     "Japan", "China", "Russia", "South Africa", "Mexico", 
     "Argentina"
@@ -29,7 +29,6 @@ const Newsapp = () => {
 
   const API_KEY = "4e968c653fcb4859b897e7b30b06c928";
 
-  // Fetch news data based on the search query
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
@@ -55,7 +54,6 @@ const Newsapp = () => {
     getData();
   }, [search]);
 
-  // Fetch bookmarked articles from the server
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
@@ -70,7 +68,6 @@ const Newsapp = () => {
     fetchBookmarks();
   }, []);
 
-  // Handle adding and removing bookmarks
   const handleBookmarkToggle = async (article) => {
     const isAlreadyBookmarked = isBookmarked(article.url, bookmarkedArticles);
     try {
@@ -116,8 +113,8 @@ const Newsapp = () => {
 
   return (
     <div className="newsapp-container">
-      <nav className="navbar2">
-        <h1 className="navbar-title2">News Aggregator</h1>
+      <nav className="news-navbar">
+        <h1 className="news-navbar-title">News Aggregator</h1>
         <div className="search-bar">
           <input
             type="text"
@@ -134,7 +131,8 @@ const Newsapp = () => {
         <button className="category-btn" onClick={() => handleCategoryClick("Trending")}>Trending</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Popular")}>Popular</button>
         <button className="category-btn" onClick={() => handleCategoryClick("World")}>World</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("India")}>India</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("India")}>National</button>
+        <button className="category-btn" onClick={() => handleCategoryClick("Tamil Nadu")}>Local</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Business")}>Business</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Technology")}>Technology</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Politics")}>Politics</button>
@@ -142,8 +140,6 @@ const Newsapp = () => {
         <button className="category-btn" onClick={() => handleCategoryClick("Health")}>Health</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Education")}>Education</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Jobs")}>Jobs</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Entertainment")}>Entertainment</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Cinema")}>Cinema</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Science")}>Science</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Bookmarks")}>Bookmarks</button>
         <button className="category-btn" onClick={() => setActiveCategory(activeCategory === "Countries" ? null : "Countries")}>
@@ -169,25 +165,24 @@ const Newsapp = () => {
       {error && <p className="error-message">Error: {error}</p>}
 
       <div className="news-section">
-  {paginatedArticles.map((news, index) => (
-    <div key={index} className="news-item">
-      <img src={news.urlToImage} alt="News" className="news-image" />
-      <div className="news-content">
-        <h3 className="news-title">
-          <a href={news.url} target="_blank" rel="noopener noreferrer" className="title-link">
-            {news.title}
-          </a>
-        </h3>
-        <p className="news-description">{news.description}</p>
-        <BookmarkButton 
-          isBookmarked={isBookmarked(news.url, bookmarkedArticles)}
-          onClick={() => handleBookmarkToggle(news)}
-        />
+        {paginatedArticles.map((news, index) => (
+          <div key={index} className="news-item">
+            <img src={news.urlToImage} alt="News" className="news-image" />
+            <div className="news-content">
+              <h3 className="news-title">
+                <a href={news.url} target="_blank" rel="noopener noreferrer" className="title-link">
+                  {news.title}
+                </a>
+              </h3>
+              <p className="news-description">{news.description}</p>
+              <BookmarkButton 
+                isBookmarked={isBookmarked(news.url, bookmarkedArticles)}
+                onClick={() => handleBookmarkToggle(news)}
+              />
+            </div>
+          </div>
+        ))}
       </div>
-    </div>
-  ))}
-</div>
-
 
       <div className="pagination">
         <button onClick={() => handlePrevPage(currentPage, setCurrentPage)} disabled={currentPage === 1}>

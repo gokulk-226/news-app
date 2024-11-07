@@ -72,7 +72,7 @@ function Login({ setIsLoggedIn }) {
   };
 
   return (
-    <div className="newsapp-container">
+    <div className="login-page">
       <div className="navbar1">
         <span className="navbar-title1">News Aggregator</span>
       </div>
