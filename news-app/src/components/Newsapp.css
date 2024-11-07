@@ -5,15 +5,15 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #121212; /* Dark background */
-    color: #f9f9f9;
+    background-color: #f5f5f5; /* Light background */
+    color: #333; /* Darker text color */
 }
 
 h1 {
     font-size: 3rem;
     font-family: 'Anta', sans-serif;
     margin-bottom: 40px;
-    color: #3d8bde;
+    color: #3498db; /* Soft blue */
     font-weight: 700;
     text-align: center;
 }
@@ -21,14 +21,14 @@ h1 {
 /* Navbar styling */
 .news-navbar {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1300px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1e1e1e; /* Dark background for navbar */
+    background-color: #ffffff; /* Light background for navbar */
     padding: 20px 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
 }
 
@@ -38,28 +38,43 @@ h1 {
     font-weight: bold;
 }
 
+/* Search bar styling with icon */
+/* Search bar styling with gray icon */
+/* Search bar styling */
 .search-bar {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 20px;
+    position: relative;
+    width: 400px;
 }
 
-.search-input {
-    padding: 12px;
-    border: none;
+.search-bar input {
+    width: 100%;
+    padding: 12px 20px 12px 40px; /* Extra left padding for the icon */
+    border: 1px solid #ddd;
     border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 380px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     font-size: 1rem;
     outline: none;
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     color: #333;
 }
 
+/* Search icon styling */
+.search-icon {
+    position: absolute;
+    left: 15px; /* Position icon inside the input */
+    font-size: 18px;
+    color: #a0a0a0; /* Gray color for icon */
+    pointer-events: none; /* Ensures icon doesn’t interfere with input focus */
+}
+
+
+
 .search-button {
     padding: 10px 20px;
-    color: #fff;
+    color: #ffffff;
+    background-color: #3498db; /* Blue color */
     border: none;
     font-size: 1rem;
     border-radius: 20px;
@@ -68,53 +83,64 @@ h1 {
 }
 
 .search-button:hover {
-    background-color: #0056b3;
+    background-color: #2980b9;
 }
 
 /* Category section styling */
+/* Category section styling */
 .category-section {
     display: flex;
-    gap: 20px;
+    gap: 10px; /* Reduced space between buttons */
     justify-content: center;
-    margin: 30px 0;
+    flex-wrap: wrap; /* Allow buttons to wrap to the next line */
+    margin: 20px 0;
 }
 
 .category-btn {
-    background-color: #28a745;
+    background-color: #3498db;
     color: #ffffff;
     border: none;
-    padding: 12px 18px;
-    border-radius: 8px;
+    padding: 10px 10px; /* Reduced padding */
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s ease;
-    font-size: 1rem;
+    font-size: 0.8rem; /* Reduced font size */
 }
 
 .category-btn:hover {
-    background-color: #218838;
-    transform: translateY(-3px);
+    background-color: #2980b9;
+    transform: translateY(-2px);
 }
+
+/* Optional: Add responsiveness for smaller screens */
+@media (max-width: 768px) {
+    .category-btn {
+        padding: 4px 8px; /* Further reduce padding on smaller screens */
+        font-size: 0.75rem; /* Adjust font size for smaller screens */
+    }
+}
+
 
 /* News section styling */
 .news-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
     padding: 20px;
 }
 
 .news-item {
-    background-color: #1e1e1e;
+    background-color: #ffffff; /* Light background */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .news-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .news-image {
@@ -123,12 +149,12 @@ h1 {
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
-    box-shadow: 0 6px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 .news-title {
     font-size: 1.5rem;
-    color: #0056b3;
+    color: #2c3e50; /* Darker blue */
     margin-top: 5px;
     font-weight: 700;
     margin-bottom: 10px;
@@ -136,14 +162,14 @@ h1 {
 
 .news-description {
     font-size: 1rem;
-    color: #b3b3b3;
+    color: #666666;
     margin: 0;
     margin-bottom: 10px;
     line-height: 1.5;
 }
 
 .bookmark-button {
-    background-color: #ff9800;
+    background-color: #f39c12; /* Orange */
     color: #ffffff;
     border: none;
     padding: 8px 12px;
@@ -151,26 +177,17 @@ h1 {
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .bookmark-button:hover {
-    background-color: #fb8c00;
+    background-color: #e67e22;
     transform: translateY(-2px);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-.bookmark-button:active {
-    background-color: #f57c20;
 }
 
 .bookmark-button.bookmarked {
-    background-color: #e74c3c;
-}
-
-.bookmark-button.bookmarked:hover {
-    background-color: #c0392b;
+    background-color: #e74c3c; /* Red */
 }
 
 /* Pagination controls */
@@ -182,8 +199,8 @@ h1 {
 }
 
 .pagination button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #3498db;
+    color: #ffffff;
     border: none;
     padding: 8px 16px;
     border-radius: 5px;
@@ -192,100 +209,28 @@ h1 {
 
 .pagination button:disabled {
     background-color: #d6d6d6;
-    cursor: not-allowed;
 }
 
-.pagination span {
-    color: #f9f9f9;
-    font-size: 1.2rem;
-}
-
-/* More info button styling */
-.more-info {
-    display: inline-block;
-    padding: 5px 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: background-color 0.3s;
-}
-
-.more-info:hover {
-    background-color: #0056b3;
-}
-
-/* Category section styling */
-.category-section {
-  display: flex;
-  gap: 10px; /* Reduced space between buttons */
-  justify-content: center;
-  flex-wrap: wrap; /* Allow buttons to wrap to the next line */
-  margin: 20px 0;
-}
-
-.category-btn {
-  background-color: #28a745;
-  color: #ffffff;
-  border: none;
-  padding: 8px 14px; /* Reduced padding */
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s ease;
-  font-size: 0.9rem; /* Reduced font size */
-}
-
-.category-btn:hover {
-  background-color: #218838;
-  transform: translateY(-3px);
-}
-
-/* Optional: Add responsiveness for smaller screens */
-@media (max-width: 768px) {
-  .category-btn {
-      padding: 6px 12px; /* Further reduce padding on smaller screens */
-      font-size: 0.8rem; /* Adjust font size for smaller screens */
-  }
-}
 /* Country dropdown styling */
 .country-dropdown {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .country-btn {
-  margin: 5px;
-  padding: 8px 14px; /* Compact padding */
-  background-color: #007bff; /* Blue background */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s, transform 0.2s ease;
+    margin: 5px;
+    padding: 8px 14px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s, transform 0.2s ease;
 }
 
-/* Hover effect for country buttons */
 .country-btn:hover {
-  background-color: #2980b9; /* Darker blue on hover */
-  transform: translateY(-2px); /* Lift the button */
-}
-
-/* Active effect for country buttons */
-.country-btn:active {
-  background-color: #1f6bb8; /* Even darker blue on click */
-}
-
-/* Optional: Add responsiveness */
-@media (max-width: 768px) {
-  .country-btn {
-      padding: 6px 12px; /* Less padding on smaller screens */
-      font-size: 0.8rem; /* Smaller font size */
-  }
+    background-color: #2980b9;
 }

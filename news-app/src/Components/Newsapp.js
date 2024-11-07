@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import './Newsapp.css';
 import { 
@@ -28,6 +29,7 @@ const Newsapp = () => {
   ]);
 
   const API_KEY = "4e968c653fcb4859b897e7b30b06c928";
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -111,6 +113,14 @@ const Newsapp = () => {
     ? paginateArticles(bookmarkedArticles, currentPage, itemsPerPage)
     : paginateArticles(newsData || [], currentPage, itemsPerPage);
 
+  // Logout function
+  const handleLogout = () => {
+    // Clear any session data or authentication tokens
+    localStorage.removeItem('isLoggedIn'); // Example for removing login state
+    // Redirect to login page
+    navigate('/login');
+  };
+
   return (
     <div className="newsapp-container">
       <nav className="news-navbar">
@@ -125,6 +135,7 @@ const Newsapp = () => {
           />
           <SearchIcon className="search-icon" />
         </div>
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </nav>
 
       <div className="category-section">

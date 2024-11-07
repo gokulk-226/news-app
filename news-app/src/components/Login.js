@@ -9,13 +9,16 @@ function Login({ setIsLoggedIn }) {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  // Email and Password Validation
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePassword = (password) => password.length >= 6;
 
+  // Handle Input Changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle Login
   const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = formData;
@@ -34,8 +37,8 @@ function Login({ setIsLoggedIn }) {
 
       if (response.ok) {
         setIsLoggedIn(true);
-        localStorage.setItem('isLoggedIn', true);
-        navigate('/');
+        localStorage.setItem('isLoggedIn', true); // Keep user logged in
+        navigate('/'); // Redirect to home page after login
       } else {
         setError(data.message || 'Login failed');
       }
@@ -44,6 +47,7 @@ function Login({ setIsLoggedIn }) {
     }
   };
 
+  // Handle Registration
   const handleRegister = async (e) => {
     e.preventDefault();
     const { name, email, password } = formData;
@@ -73,8 +77,8 @@ function Login({ setIsLoggedIn }) {
 
   return (
     <div className="login-page">
-      <div className="navbar1">
-        <span className="navbar-title1">News Aggregator</span>
+      <div className="login-navbar">
+        <span className="login-navbar-title">News Aggregator</span>
       </div>
       <div className="login-container">
         <h2>{isRegistering ? 'Register' : 'Login'}</h2>
