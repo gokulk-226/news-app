@@ -21,7 +21,7 @@ h1 {
 /* Navbar styling */
 .news-navbar {
     width: 100%;
-    max-width: 1300px;
+    max-width: 1435px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -189,6 +189,14 @@ h1 {
 .bookmark-button.bookmarked {
     background-color: #e74c3c; /* Red */
 }
+.bookmarks-heading {
+    text-align: center;
+    color: #3498db; /* Set your preferred color */
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 
 /* Pagination controls */
 .pagination {

@@ -121,7 +121,6 @@ const Newsapp = () => {
     localStorage.removeItem('isLoggedIn');
     window.location.href = '/'; // Directly navigate to /login
   };
-
   return (
     <div className="newsapp-container">
       <nav className="news-navbar">
@@ -138,7 +137,7 @@ const Newsapp = () => {
         </div>
         <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </nav>
-
+  
       <div className="category-section">
         <button className="category-btn" onClick={() => handleCategoryClick("Trending")}>Trending</button>
         <button className="category-btn" onClick={() => handleCategoryClick("Popular")}>Popular</button>
@@ -158,7 +157,7 @@ const Newsapp = () => {
           Countries
         </button>
       </div>
-
+  
       {activeCategory === "Countries" && (
         <div className="country-dropdown">
           {["United States", "United Kingdom", "Australia", "Canada", "Germany", "France", "Italy", "Spain", "Brazil", "Japan", "China", "Russia", "South Africa", "Mexico", "Argentina"].map((country, index) => (
@@ -172,10 +171,14 @@ const Newsapp = () => {
           ))}
         </div>
       )}
-
+  
       {loading && <p>Loading articles...</p>}
       {error && <p className="error-message">Error: {error}</p>}
-
+  
+      {activeCategory === "Bookmarks" && (
+        <h2 className="bookmarks-heading">Your Bookmarks</h2>
+      )}
+  
       <div className="news-section">
         {paginatedArticles.map((news, index) => (
           <div key={index} className="news-item">
@@ -195,7 +198,7 @@ const Newsapp = () => {
           </div>
         ))}
       </div>
-
+  
       <div className="pagination">
         <button onClick={() => handlePrevPage(currentPage, setCurrentPage)} disabled={currentPage === 1}>
           Previous
@@ -211,5 +214,4 @@ const Newsapp = () => {
     </div>
   );
 };
-
-export default Newsapp;
+export default Newsapp;  

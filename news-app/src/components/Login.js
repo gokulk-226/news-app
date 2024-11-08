@@ -83,13 +83,15 @@ function Login({ setIsLoggedIn }) {
       <div className="login-container">
         <h2>{isRegistering ? 'Register' : 'Login'}</h2>
         {error && <p className="error-message">{error}</p>}
+
         <form onSubmit={isRegistering ? handleRegister : handleLogin}>
           {isRegistering && (
             <div className="input-group">
-              <label>Name:</label>
+              <label htmlFor="name">Name:</label>
               <input
                 type="text"
                 name="name"
+                id="name"
                 className="login-input"
                 value={formData.name}
                 onChange={handleChange}
@@ -97,23 +99,27 @@ function Login({ setIsLoggedIn }) {
               />
             </div>
           )}
+
           <div className="input-group">
-            <label>Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
               type="email"
               name="email"
+              id="email"
               className="login-input"
               value={formData.email}
               onChange={handleChange}
               required
             />
           </div>
+
           <div className="input-group">
-            <label>Password:</label>
+            <label htmlFor="password">Password:</label>
             <div className="password-container">
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="password"
+                id="password"
                 className="login-input"
                 value={formData.password}
                 onChange={handleChange}
@@ -127,9 +133,11 @@ function Login({ setIsLoggedIn }) {
               </span>
             </div>
           </div>
+
           <button type="submit" className="login-button">
             {isRegistering ? 'Register' : 'Login'}
           </button>
+
           <p className="toggle-text">
             {isRegistering ? 'Already have an account?' : "Don't have an account?"}{' '}
             <button
