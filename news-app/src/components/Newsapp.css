@@ -242,3 +242,11 @@ h1 {
 .country-btn:hover {
     background-color: #2980b9;
 }
+.centered-text{
+    text-align: center;
+    color: #3498db; /* Set your preferred color */
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }

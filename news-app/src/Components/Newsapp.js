@@ -14,10 +14,10 @@ const Newsapp = () => {
   const [search, setSearch] = useState("India");
   const [searchBar, setSearchBar] = useState("");
   const [newsData, setNewsData] = useState([]);
-  const [activeCategory, setActiveCategory] = useState("Bookmarks");
+  const [activeCategory, setActiveCategory] = useState("Popular");
   const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15;
+  const itemsPerPage = 18;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 

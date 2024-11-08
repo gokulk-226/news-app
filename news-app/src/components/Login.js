@@ -36,9 +36,10 @@ function Login({ setIsLoggedIn }) {
       const data = await response.json();
 
       if (response.ok) {
-        setIsLoggedIn(true);
-        localStorage.setItem('isLoggedIn', true); // Keep user logged in
-        navigate('/'); // Redirect to home page after login
+        // Ensure login success is reflected immediately
+        setIsLoggedIn(true);  // Update state immediately
+        localStorage.setItem('isLoggedIn', true);  // Store login status in localStorage
+        navigate('/NewsApp');  // Redirect to home page after login
       } else {
         setError(data.message || 'Login failed');
       }

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import News from './components/Newsapp';
+import Home from './components/Home';
 
 function App() {
   // Get the login state from localStorage on initial load
@@ -19,15 +20,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? <Navigate to="/Newsapp" replace /> : <Login setIsLoggedIn={handleLogin} />
-          }
+        <Route path="/" element={<Home />} />
+        <Route 
+          path="/login" 
+          element={isLoggedIn ? <Navigate to="/Newsapp" replace /> : <Login setIsLoggedIn={handleLogin} />} 
         />
-        <Route
-          path="/Newsapp"
-          element={isLoggedIn ? <News /> : <Navigate to="/" replace />}
+        <Route 
+          path="/Newsapp" 
+          element={isLoggedIn ? <News /> : <Navigate to="/" replace />} 
         />
       </Routes>
     </Router>
