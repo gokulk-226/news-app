@@ -21,16 +21,18 @@ const Newsapp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [countries] = useState([
-    "United States", "United Kingdom", "Australia", "Canada", 
-    "Germany", "France", "Italy", "Spain", "Brazil", 
-    "Japan", "China", "Russia", "South Africa", "Mexico", 
-    "Argentina"
-  ]);
-
   const API_KEY = "4e968c653fcb4859b897e7b30b06c928";
   const navigate = useNavigate();
 
+  // Check login status only on initial load, not on refresh or re-renders
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (!isLoggedIn) {
+      navigate('/login'); // Redirect to login if not logged in
+    }
+  }, [navigate]);
+
+  // Fetch news articles based on search term
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
@@ -56,6 +58,7 @@ const Newsapp = () => {
     getData();
   }, [search]);
 
+  // Fetch bookmarks from the server
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
@@ -115,10 +118,8 @@ const Newsapp = () => {
 
   // Logout function
   const handleLogout = () => {
-    // Clear any session data or authentication tokens
-    localStorage.removeItem('isLoggedIn'); // Example for removing login state
-    // Redirect to login page
-    navigate('/login');
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = '/'; // Directly navigate to /login
   };
 
   return (
@@ -160,7 +161,7 @@ const Newsapp = () => {
 
       {activeCategory === "Countries" && (
         <div className="country-dropdown">
-          {countries.map((country, index) => (
+          {["United States", "United Kingdom", "Australia", "Canada", "Germany", "France", "Italy", "Spain", "Brazil", "Japan", "China", "Russia", "South Africa", "Mexico", "Argentina"].map((country, index) => (
             <button 
               key={index} 
               className="country-btn" 
