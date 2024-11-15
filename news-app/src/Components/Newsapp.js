@@ -9,6 +9,8 @@ import {
   handlePrevPage, 
   BookmarkButton 
 } from './NewsHelpers';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS styles
 
 const Newsapp = () => {
   const [search, setSearch] = useState("India");
@@ -17,18 +19,18 @@ const Newsapp = () => {
   const [activeCategory, setActiveCategory] = useState("Popular");
   const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 18;
+  const itemsPerPage = 20;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API_KEY = "4e968c653fcb4859b897e7b30b06c928";
+  const API_KEY = "b6416b78bc0349dea2c69fd9b3482950";
   const navigate = useNavigate();
 
-  // Check login status only on initial load, not on refresh or re-renders
+  // Redirect to login if not logged in
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (!isLoggedIn) {
-      navigate('/login'); // Redirect to login if not logged in
+      navigate('/login');
     }
   }, [navigate]);
 
@@ -71,6 +73,15 @@ const Newsapp = () => {
       }
     };
     fetchBookmarks();
+  }, []);
+
+  // Initialize AOS for smooth scroll animations
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration in ms
+      easing: 'ease-in-out', // Easing function
+      once: true, // Trigger animation only once
+    });
   }, []);
 
   const handleBookmarkToggle = async (article) => {
@@ -119,8 +130,9 @@ const Newsapp = () => {
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
-    window.location.href = '/'; // Directly navigate to /login
+    window.location.href = '/'; // Redirect to login
   };
+
   return (
     <div className="newsapp-container">
       <nav className="news-navbar">
@@ -139,20 +151,11 @@ const Newsapp = () => {
       </nav>
   
       <div className="category-section">
-        <button className="category-btn" onClick={() => handleCategoryClick("Trending")}>Trending</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Popular")}>Popular</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("World")}>World</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("India")}>National</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Tamil Nadu")}>Local</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Business")}>Business</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Technology")}>Technology</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Politics")}>Politics</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Sports")}>Sports</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Health")}>Health</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Education")}>Education</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Jobs")}>Jobs</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Science")}>Science</button>
-        <button className="category-btn" onClick={() => handleCategoryClick("Bookmarks")}>Bookmarks</button>
+        {["Trending", "Popular", "World", "India", "Tamil Nadu", "Business", "Technology", "Politics", "Sports", "Health", "Education", "Jobs", "Science", "Bookmarks"].map((category) => (
+          <button key={category} className="category-btn" onClick={() => handleCategoryClick(category)}>
+            {category}
+          </button>
+        ))}
         <button className="category-btn" onClick={() => setActiveCategory(activeCategory === "Countries" ? null : "Countries")}>
           Countries
         </button>
@@ -160,9 +163,9 @@ const Newsapp = () => {
   
       {activeCategory === "Countries" && (
         <div className="country-dropdown">
-          {["United States", "United Kingdom", "Australia", "Canada", "Germany", "France", "Italy", "Spain", "Brazil", "Japan", "China", "Russia", "South Africa", "Mexico", "Argentina"].map((country, index) => (
+          {["United States", "United Kingdom", "Australia", "Canada", "Germany", "France", "Italy", "Spain", "Brazil", "Japan", "China", "Russia", "South Africa", "Mexico", "Argentina"].map((country) => (
             <button 
-              key={index} 
+              key={country} 
               className="country-btn" 
               onClick={() => handleCountryClick(country)}
             >
@@ -181,7 +184,7 @@ const Newsapp = () => {
   
       <div className="news-section">
         {paginatedArticles.map((news, index) => (
-          <div key={index} className="news-item">
+          <div key={index} className="news-item" data-aos="fade-up"> {/* AOS attribute for animation */}
             <img src={news.urlToImage} alt="News" className="news-image" />
             <div className="news-content">
               <h3 className="news-title">
@@ -214,4 +217,5 @@ const Newsapp = () => {
     </div>
   );
 };
-export default Newsapp;  
+
+export default Newsapp;

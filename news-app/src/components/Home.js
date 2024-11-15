@@ -8,7 +8,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);  // Pagination state
 
-  const API_KEY = "4e968c653fcb4859b897e7b30b06c928";  // Store the API key
+  const API_KEY = "b6416b78bc0349dea2c69fd9b3482950";  // Store the API key
 
   // Fetch trending news articles
   useEffect(() => {
